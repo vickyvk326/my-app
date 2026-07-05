@@ -3,7 +3,7 @@ import type { Category } from '@/types/demo';
 export const DEMO_CATEGORIES: Category[] = [
   {
     slug: 'core-components',
-    title: 'Core Components',
+    title: '1. Core Components',
     description: 'View, Text, Image, ScrollView, Pressable, Switch, ActivityIndicator, Modal',
     icon: 'cube-outline',
   },

@@ -26,6 +26,7 @@ export default function CoreComponentsScreen() {
   const [switchOn, setSwitchOn] = useState(false);
   const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
+  const [pressableDown, setPressableDown] = useState(false);
 
   return (
     <ScreenContainer>
@@ -41,7 +42,11 @@ export default function CoreComponentsScreen() {
 
       <Section title="Pressable vs TouchableOpacity">
         <View className="flex-row gap-3">
-          <Pressable className="flex-1 items-center rounded-xl bg-indigo-600 p-3 active:bg-indigo-800">
+          <Pressable
+            onPressIn={() => setPressableDown(true)}
+            onPressOut={() => setPressableDown(false)}
+            className={`flex-1 items-center rounded-xl p-3 ${pressableDown ? 'bg-indigo-800' : 'bg-indigo-600'}`}
+          >
             <Text className="font-medium text-white">Pressable</Text>
           </Pressable>
           <TouchableOpacity
