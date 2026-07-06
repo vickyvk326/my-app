@@ -15,7 +15,7 @@ export default function HomeScreen() {
         contentContainerStyle={{ padding: 16, gap: 12 }}
         ItemSeparatorComponent={() => <View className="h-3" />}
         ListHeaderComponent={
-          <View className="mb-2 p-4 rounded-lg">
+          <View className="mb-2">
             <Text className="text-2xl font-bold text-secondary-foreground">
               Explore React Native
             </Text>

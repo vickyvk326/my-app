@@ -16,7 +16,7 @@ export default function RootLayout() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider value={theme}>
-        <Stack screenOptions={{ contentStyle: { backgroundColor: theme.colors.background } }} />
+        <Stack screenOptions={{ contentStyle: { backgroundColor: theme.colors.background ,  paddingHorizontal: 12, paddingBottom: 12 } }} />
         <StatusBar style="auto" />
       </ThemeProvider>
     </QueryClientProvider>

@@ -3,7 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 export function ScreenContainer({ children, contentContainerStyle, ...rest }: ScrollViewProps) {
   return (
-    <SafeAreaView className="flex-1 bg-white dark:bg-neutral-900">
+    <SafeAreaView className="flex-1">
       <ScrollView
         className="flex-1"
         contentContainerStyle={[{ padding: 16, gap: 16 }, contentContainerStyle]}
