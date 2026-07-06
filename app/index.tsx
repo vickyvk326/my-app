@@ -7,7 +7,7 @@ import { DEMO_CATEGORIES } from '@/constants/demo-categories';
 
 export default function HomeScreen() {
   return (
-    <SafeAreaView className="flex-1 bg-white dark:bg-neutral-900">
+    <SafeAreaView className="flex-1">
       <Stack.Screen options={{ title: 'RN Playground' }} />
       <FlatList
         data={DEMO_CATEGORIES}
@@ -15,11 +15,11 @@ export default function HomeScreen() {
         contentContainerStyle={{ padding: 16, gap: 12 }}
         ItemSeparatorComponent={() => <View className="h-3" />}
         ListHeaderComponent={
-          <View className="mb-2">
-            <Text className="text-2xl font-bold text-neutral-900 dark:text-neutral-50">
+          <View className="mb-2 p-4 rounded-lg">
+            <Text className="text-2xl font-bold text-secondary-foreground">
               Explore React Native
             </Text>
-            <Text className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+            <Text className="mt-1 text-sm text-secondary-foreground/70">
               Pick a topic to see it in action.
             </Text>
           </View>

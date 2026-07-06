@@ -1,6 +1,6 @@
 import NetInfo from '@react-native-community/netinfo';
 import { focusManager, onlineManager, QueryClient } from '@tanstack/react-query';
-import { AppState, type AppStateStatus, Platform } from 'react-native';
+import { AppState, type AppStateStatus } from 'react-native';
 
 export const queryClient = new QueryClient();
 
@@ -14,9 +14,7 @@ onlineManager.setEventListener((setOnline) => {
 });
 
 function onAppStateChange(status: AppStateStatus) {
-  if (Platform.OS !== 'web') {
-    focusManager.setFocused(status === 'active');
-  }
+  focusManager.setFocused(status === 'active');
 }
 
 AppState.addEventListener('change', onAppStateChange);

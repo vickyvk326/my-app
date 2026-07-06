@@ -3,11 +3,10 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
-    "start": "expo start",
+    "start": "expo start --dev-client",
     "start:go": "expo start --clear --go",
-    "android": "expo run:android",
+    "android": "npx expo run:android --device",
     "ios": "expo run:ios",
-    "web": "expo start --web",
     "lint": "expo lint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -18,6 +17,7 @@
     "@react-native-community/netinfo": "^11.4.1",
     "@react-navigation/native": "^7.1.8",
     "@tanstack/react-query": "^5.90.5",
+    "babel-preset-expo": "~54.0.10",
     "expo": "~54.0.34",
     "expo-constants": "~18.0.13",
     "expo-dev-client": "~6.0.21",
@@ -26,15 +26,14 @@
     "expo-router": "~6.0.23",
     "expo-splash-screen": "~31.0.13",
     "expo-status-bar": "~3.0.9",
+    "expo-system-ui": "~6.0.9",
     "expo-web-browser": "~15.0.11",
     "nativewind": "^4.2.6",
     "react": "19.1.0",
-    "react-dom": "19.1.0",
     "react-native": "0.81.5",
     "react-native-reanimated": "~4.1.1",
     "react-native-safe-area-context": "~5.6.0",
     "react-native-screens": "~4.16.0",
-    "react-native-web": "~0.21.0",
     "react-native-worklets": "0.5.1",
     "tailwindcss": "^3.4.19",
     "zustand": "^5.0.2"
@@ -49,5 +48,8 @@
     "typescript": "~5.9.2"
   },
   "private": true,
-  "packageManager": "pnpm@11.10.0+sha512.0b7f8b98060031904c017e3a41eb187a16d40eeb829b95c4f8cb03681761fc4ab53dd219115b9b447f4dce1a05a214764461e7d3703392a9f32f9511ce8c86c8"
+  "packageManager": "pnpm@11.10.0+sha512.0b7f8b98060031904c017e3a41eb187a16d40eeb829b95c4f8cb03681761fc4ab53dd219115b9b447f4dce1a05a214764461e7d3703392a9f32f9511ce8c86c8",
+  "allowScripts": {
+    "unrs-resolver@1.12.2": true
+  }
 }
