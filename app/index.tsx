@@ -19,7 +19,7 @@ export default function HomeScreen() {
             <Text className="text-2xl font-bold text-secondary-foreground">
               Explore React Native
             </Text>
-            <Text className="mt-1 text-sm text-secondary-foreground/70">
+            <Text className="mt-1 text-sm text-muted-foreground">
               Pick a topic to see it in action.
             </Text>
           </View>
