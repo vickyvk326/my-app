@@ -22,7 +22,7 @@ export function CategoryCard({ category }: { category: Category }) {
           <Text className="text-base font-semibold text-card-foreground">{category.title}</Text>
           <Text className="mt-0.5 text-sm text-muted-foreground">{category.description}</Text>
         </View>
-        <ThemedIonicons name="chevron-forward" size={20} className="text-muted-foreground" />
+        <ThemedIonicons name="chevron-right" size={20} className="text-muted-foreground" />
       </Pressable>
     </Link>
   );

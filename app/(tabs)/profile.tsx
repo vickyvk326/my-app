@@ -8,7 +8,7 @@ import { DEMO_CATEGORIES } from '@/constants/demo-categories';
 export default function DemosScreen() {
   return (
     <SafeAreaView className="flex-1">
-      <Stack.Screen options={{ title: 'Demos' }} />
+      <Stack.Screen options={{ title: 'Profile' }} />
       <FlatList
         data={DEMO_CATEGORIES}
         keyExtractor={(item) => item.slug}

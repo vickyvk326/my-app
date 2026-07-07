@@ -11,6 +11,10 @@ module.exports = {
           DEFAULT: 'rgb(var(--color-card) / <alpha-value>)',
           foreground: 'rgb(var(--color-card-foreground) / <alpha-value>)',
         },
+        popover: {
+          DEFAULT: 'rgb(var(--color-popover) / <alpha-value>)',
+          foreground: 'rgb(var(--color-popover-foreground) / <alpha-value>)',
+        },
         border: 'rgb(var(--color-border) / <alpha-value>)',
         input: 'rgb(var(--color-input) / <alpha-value>)',
         ring: 'rgb(var(--color-ring) / <alpha-value>)',
@@ -34,6 +38,11 @@ module.exports = {
           DEFAULT: 'rgb(var(--color-destructive) / <alpha-value>)',
           foreground: 'rgb(var(--color-destructive-foreground) / <alpha-value>)',
         },
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
       },
     },
   },

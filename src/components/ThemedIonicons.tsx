@@ -1,7 +1,7 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { cssInterop } from 'nativewind';
 
-export const ThemedIonicons = cssInterop(Ionicons, {
+export const ThemedIonicons = cssInterop(Feather , {
   className: {
     target: false,
     nativeStyleToProp: { color: true },
