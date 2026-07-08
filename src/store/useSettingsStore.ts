@@ -38,15 +38,37 @@ const defaultSettings: SettingsType = {
     isBiometricEnabled: false,
   },
   personalSettings: {
-    firstName: '',
-    lastName: '',
+    firstName: 'Aanya',
+    lastName: 'Kapoor',
     dateOfBirth: new Date().toISOString(),
   },
   accountsSettings: {
-    accounts: [],
+    accounts: [
+      {
+        id: 'acc-purse-1',
+        name: 'Cash Wallet',
+        balance: 2500,
+        type: 'purse',
+        addedDate: '2026-01-05T00:00:00.000Z',
+      },
+      {
+        id: 'acc-bank-1',
+        name: 'HDFC Savings',
+        balance: 84250.75,
+        type: 'bank',
+        addedDate: '2026-01-05T00:00:00.000Z',
+      },
+      {
+        id: 'acc-demat-1',
+        name: 'Zerodha Demat',
+        balance: 152300.5,
+        type: 'demat',
+        addedDate: '2026-02-12T00:00:00.000Z',
+      },
+    ],
   },
   financeSettings: {
-    monthlyBudget: 1000,
+    monthlyBudget: 30000,
   },
 };
 

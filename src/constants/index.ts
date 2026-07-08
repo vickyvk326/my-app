@@ -1,8 +1,6 @@
 export const TRANSACTION_CATEGORIES = [
   // Income
   'salary',
-  'freelance',
-  'business',
   'investment',
   'gift_received',
   'refund',
@@ -20,10 +18,8 @@ export const TRANSACTION_CATEGORIES = [
   'travel',
   'subscriptions',
   'insurance',
-  'personal_care',
   'taxes',
   'gifts',
-  'charity',
   'fees',
 
   // Transfers
@@ -54,8 +50,8 @@ export const currencyCodeMap = {
   BRL: 'R$',
 } as const;
 
-export const currencyCodes = Object.keys(currencyCodeMap);
-export const currencySymbols = Object.values(currencyCodeMap);
-
 export type CurrencyCodeType = keyof typeof currencyCodeMap;
 export type CurrencySymbolType = (typeof currencyCodeMap)[CurrencyCodeType];
+
+export const currencyCodes = Object.keys(currencyCodeMap) as CurrencyCodeType[];
+export const currencySymbols = Object.values(currencyCodeMap) as CurrencySymbolType[];

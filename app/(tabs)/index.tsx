@@ -1,10 +1,13 @@
 import Avatar from '@/components/Avatar';
 import PageView from '@/components/PageView';
+import { ThemedIonicons } from '@/components/ThemedIonicons';
+import TransactionRowView from '@/components/TransactionRowView';
 import { currencyCodeMap } from '@/constants';
 import { useSettingsStore } from '@/store/useSettingsStore';
 import { useTransactionsStore } from '@/store/useTransactionsStore';
+import { Link } from 'expo-router';
 import React, { useMemo } from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Pressable, ScrollView, Text, View } from 'react-native';
 
 export default function HomeScreen() {
   const { settings } = useSettingsStore();
@@ -22,12 +25,12 @@ export default function HomeScreen() {
 
   const { transactions } = useTransactionsStore();
 
-  const today = new Date();
+  const today = useMemo(() => new Date(), []);
   const monthName = today.toLocaleString('default', { month: 'long' });
 
   const currentMonthTransactions = useMemo(
     () => transactions.filter((t) => new Date(t.date).getMonth() === today.getMonth()),
-    [transactions],
+    [transactions, today],
   );
 
   const currentMonthTotalIncome = currentMonthTransactions
@@ -38,15 +41,17 @@ export default function HomeScreen() {
     .filter((t) => t.amount < 0)
     .reduce((acc, t) => acc + Math.abs(t.amount), 0);
 
+  const budgetPercentage = Math.min((currentMonthTotalExpense / monthlyBudget) * 100, 100);
+
   const recentActivities = transactions.slice(0, 5);
 
   return (
     <PageView title="Home">
       {/* Top greetings */}
-      <View className="flex flex-row justify-between items-center p-5">
+      <View className="flex flex-row justify-between items-center px-5 py-4">
         <View>
-          <Text className="font-medium text-secondary-foreground/80">Good morning</Text>
-          <Text className="font-bold text-base text-secondary-foreground">{fullName}</Text>
+          <Text className="font-medium text-muted-foreground text-base">Good morning</Text>
+          <Text className="font-bold text-lg text-secondary-foreground/90">{firstName}</Text>
         </View>
         <Avatar name={fullName} size={45} color="#DCEFE6" />
       </View>
@@ -55,22 +60,22 @@ export default function HomeScreen() {
       <ScrollView contentContainerClassName="px-5">
         {/* Quick overview */}
         <View className="flex flex-col gap-3 bg-accent rounded-2xl p-5">
-          <Text className="text-accent-foreground/90 text-md font-medium">Total balance</Text>
-          <Text className="text-2xl font-bold text-white">
+          <Text className="text-accent-foreground/80 text-base font-medium">Total balance</Text>
+          <Text className="text-2xl font-bold text-white tracking-wider">
             {currencySymbol}
             {availableTotalbalance.toLocaleString()}
           </Text>
           <View className="flex flex-row gap-5">
-            <View className="flex-1 flex-col gap-1 bg-accent-foreground/10 p-3 pt-1.5 rounded-2xl">
+            <View className="flex-1 flex-col gap-1 bg-accent-foreground/20 p-3 pt-1.5 rounded-2xl">
               <Text className="text-xs font-medium text-accent-foreground/90">Income</Text>
-              <Text className="text-md font-bold text-white">
+              <Text className="text-md font-bold text-white tracking-wider">
                 +{currencySymbol}
                 {currentMonthTotalIncome.toLocaleString()}
               </Text>
             </View>
-            <View className="flex-1 flex-col gap-1 bg-accent-foreground/10 p-3 pt-1.5 rounded-2xl">
+            <View className="flex-1 flex-col gap-1 bg-accent-foreground/20 p-3 pt-1.5 rounded-2xl">
               <Text className="text-xs font-medium text-accent-foreground/90">Spent</Text>
-              <Text className="text-md font-bold text-white">
+              <Text className="text-md font-bold text-white tracking-wider">
                 -{currencySymbol}
                 {currentMonthTotalExpense.toLocaleString()}
               </Text>
@@ -84,15 +89,18 @@ export default function HomeScreen() {
             <Text className="text-secondary-foreground/90 text-base font-semibold">
               {monthName} budget
             </Text>
-            <Text className="text-secondary-foreground/70 text-md font-medium">
+            <Text className="text-secondary-foreground/70 text-sm font-medium tracking-wider">
               {currencySymbol}
               {currentMonthTotalExpense.toLocaleString()} / {currencySymbol}
               {monthlyBudget.toLocaleString()}
             </Text>
           </View>
 
-          <View className="h-2.5 w-full bg-secondary-foreground/10 rounded-full">
-            <View className="h-2.5 w-[77%] bg-accent rounded-full" />
+          <View className="h-2 w-full bg-secondary-foreground/10 rounded-full mt-2">
+            <View
+              className="h-2 bg-accent rounded-full"
+              style={{ width: `${budgetPercentage}%` }}
+            />
           </View>
         </View>
 
@@ -101,9 +109,9 @@ export default function HomeScreen() {
           <Text className="text-secondary-foreground/90 text-md font-semibold">
             Recent activity
           </Text>
-          <TouchableOpacity>
+          <Link href={'/'}>
             <Text className="text-accent text-md font-semibold">See all</Text>
-          </TouchableOpacity>
+          </Link>
         </View>
 
         {/* Recent transactions */}
@@ -111,46 +119,18 @@ export default function HomeScreen() {
           {recentActivities.map((activity, i) => (
             <React.Fragment key={activity.id}>
               {i > 0 && <View className="h-[1px] bg-secondary-foreground/10" />}
-              <View className="flex flex-row gap-4 justify-between items-center rounded-2xl">
-                <Avatar name={activity.title} size={40} color="#DCEFE6" />
-                <View className="flex-1">
-                  <Text className="text-secondary-foreground/90 text-md font-semibold">
-                    {activity.title}
-                  </Text>
-                  <View className="flex flex-col">
-                    <Text
-                      className="text-secondary-foreground/70 text-sm font-medium max-w-20"
-                      numberOfLines={1}
-                      ellipsizeMode="tail" // 'head' | 'middle' | 'tail' | 'clip'
-                    >
-                      {activity.category}
-                    </Text>
-                    <Text className="text-secondary-foreground/70 text-xs font-medium">
-                      {activity.date}
-                    </Text>
-                  </View>
-                </View>
-                <Text
-                  className="text-md font-bold"
-                  style={{
-                    color:
-                      activity.amount < 0 ? '#EF4444' : activity.amount > 0 ? '#10B981' : '#3B82F6',
-                  }}
-                >
-                  {activity.amount < 0 ? '-' : activity.amount > 0 ? '+' : ''}
-                  {currencySymbol}
-                  {activity.amount.toLocaleString()}
-                </Text>
-              </View>
+              <TransactionRowView activity={activity} currencySymbol={currencySymbol} />
             </React.Fragment>
           ))}
         </View>
       </ScrollView>
 
       {/* Add transaction button */}
-      <TouchableOpacity className="absolute bottom-3 right-3 bg-accent h-14 w-14 rounded-2xl flex flex-row items-center justify-center">
-        <Text className="text-accent-foreground text-4xl">+</Text>
-      </TouchableOpacity>
+      <Link href="/new-expense" asChild className="absolute bottom-3 right-3" prefetch>
+        <Pressable className="bg-accent h-12 w-12 rounded-2xl items-center justify-center">
+          <ThemedIonicons name="plus" size={20} className="text-accent-foreground" />
+        </Pressable>
+      </Link>
     </PageView>
   );
 }
