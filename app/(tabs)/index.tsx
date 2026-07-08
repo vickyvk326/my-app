@@ -3,7 +3,7 @@ import PageView from '@/components/PageView';
 import { currencyCodeMap } from '@/constants';
 import { useSettingsStore } from '@/store/useSettingsStore';
 import { useTransactionsStore } from '@/store/useTransactionsStore';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 export default function HomeScreen() {
@@ -16,13 +16,18 @@ export default function HomeScreen() {
   const currencySymbol = currencyCodeMap[currency];
 
   const { firstName, lastName } = settings.personalSettings;
+  const fullName = `${firstName}${lastName ? ' ' + lastName : ''}`;
 
   const { monthlyBudget } = settings.financeSettings;
 
   const { transactions } = useTransactionsStore();
 
-  const currentMonthTransactions = transactions.filter(
-    (t) => new Date(t.date).getMonth() === new Date().getMonth(),
+  const today = new Date();
+  const monthName = today.toLocaleString('default', { month: 'long' });
+
+  const currentMonthTransactions = useMemo(
+    () => transactions.filter((t) => new Date(t.date).getMonth() === today.getMonth()),
+    [transactions],
   );
 
   const currentMonthTotalIncome = currentMonthTransactions
@@ -35,23 +40,19 @@ export default function HomeScreen() {
 
   const recentActivities = transactions.slice(0, 5);
 
-  const monthName = new Date().toLocaleString('default', { month: 'long' });
-
   return (
     <PageView title="Home">
-      
       {/* Top greetings */}
       <View className="flex flex-row justify-between items-center p-5">
         <View>
           <Text className="font-medium text-secondary-foreground/80">Good morning</Text>
-          <Text className="font-bold text-base text-secondary-foreground">{`${firstName}${lastName ? ' ' + lastName : ''}`}</Text>
+          <Text className="font-bold text-base text-secondary-foreground">{fullName}</Text>
         </View>
-        <Avatar name="Aanya K" size={45} color="#DCEFE6" />
+        <Avatar name={fullName} size={45} color="#DCEFE6" />
       </View>
 
       {/* Dashboard */}
       <ScrollView contentContainerClassName="px-5">
-        
         {/* Quick overview */}
         <View className="flex flex-col gap-3 bg-accent rounded-2xl p-5">
           <Text className="text-accent-foreground/90 text-md font-medium">Total balance</Text>
