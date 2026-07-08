@@ -40,7 +40,7 @@ export default function SearchScreen() {
               onPress={() => setActiveTab(qf)}
             >
               <Text
-                className={`${qf === activeTab ? 'text-white' : 'text-secondary-foreground/70'} font-semibold`}
+                className={`${qf === activeTab ? 'text-white' : 'text-black/70'} font-semibold`}
               >
                 {qf}
               </Text>

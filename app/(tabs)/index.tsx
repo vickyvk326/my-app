@@ -49,7 +49,7 @@ export default function HomeScreen() {
       <View className="flex flex-row justify-between items-center p-5">
         <View>
           <Text className="font-medium text-secondary-foreground/80">Good morning</Text>
-          <Text className="font-bold text-base">Aanya</Text>
+          <Text className="font-bold text-base text-secondary-foreground">Aanya</Text>
         </View>
         <Avatar name="Aanya K" size={45} color="#DCEFE6" />
       </View>
