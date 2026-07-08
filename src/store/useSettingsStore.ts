@@ -1,8 +1,8 @@
 import { CurrencyCodeType } from '@/constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { v4 as uuidv4 } from 'uuid';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { v4 as uuidv4 } from 'uuid';
 
 export type AccountType = {
   id: string;
@@ -26,6 +26,9 @@ export type SettingsType = {
   accountsSettings: {
     accounts: AccountType[];
   };
+  financeSettings: {
+    monthlyBudget: number;
+  };
 };
 
 const defaultSettings: SettingsType = {
@@ -41,6 +44,9 @@ const defaultSettings: SettingsType = {
   },
   accountsSettings: {
     accounts: [],
+  },
+  financeSettings: {
+    monthlyBudget: 1000,
   },
 };
 

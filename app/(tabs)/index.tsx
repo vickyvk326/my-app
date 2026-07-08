@@ -1,55 +1,49 @@
 import Avatar from '@/components/Avatar';
 import PageView from '@/components/PageView';
+import { currencyCodeMap } from '@/constants';
+import { useSettingsStore } from '@/store/useSettingsStore';
+import { useTransactionsStore } from '@/store/useTransactionsStore';
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 export default function HomeScreen() {
-  // mock recent activities
-  const recentActivities = [
-    {
-      id: 1,
-      title: 'Whole Foods Market',
-      category: 'Groceries',
-      amount: '-$64.20',
-      date: '2024-07-01 12:30 PM',
-    },
-    {
-      id: 2,
-      title: 'Starbucks',
-      category: 'Coffee',
-      amount: '-$5.50',
-      date: '2024-07-01 10:15 AM',
-    },
-    {
-      id: 3,
-      title: 'Salary — Acme Inc.',
-      category: 'Income',
-      amount: '$3,200.00',
-      date: '2024-07-01 09:00 AM',
-    },
-    {
-      id: 4,
-      title: 'Netflix',
-      category: 'Entertainment',
-      amount: '-$15.99',
-      date: '2024-06-30 08:00 PM',
-    },
-    {
-      id: 5,
-      title: 'Amazon',
-      category: 'Shopping',
-      amount: '-$120.00',
-      date: '2024-06-30 07:30 PM',
-    },
-  ];
+  const { settings } = useSettingsStore();
+
+  const { accounts } = settings.accountsSettings;
+  const availableTotalbalance = accounts.reduce((acc, a) => acc + a.balance, 0);
+
+  const { currency } = settings.systemSettings;
+  const currencySymbol = currencyCodeMap[currency];
+
+  const { firstName, lastName } = settings.personalSettings;
+
+  const { monthlyBudget } = settings.financeSettings;
+
+  const { transactions } = useTransactionsStore();
+
+  const currentMonthTransactions = transactions.filter(
+    (t) => new Date(t.date).getMonth() === new Date().getMonth(),
+  );
+
+  const currentMonthTotalIncome = currentMonthTransactions
+    .filter((t) => t.amount > 0)
+    .reduce((acc, t) => acc + t.amount, 0);
+
+  const currentMonthTotalExpense = currentMonthTransactions
+    .filter((t) => t.amount < 0)
+    .reduce((acc, t) => acc + Math.abs(t.amount), 0);
+
+  const recentActivities = transactions.slice(0, 5);
+
+  const monthName = new Date().toLocaleString('default', { month: 'long' });
+
   return (
     <PageView title="Home">
-      
       {/* Top greetings */}
       <View className="flex flex-row justify-between items-center p-5">
         <View>
           <Text className="font-medium text-secondary-foreground/80">Good morning</Text>
-          <Text className="font-bold text-base text-secondary-foreground">Aanya</Text>
+          <Text className="font-bold text-base text-secondary-foreground">{`${firstName}${lastName ? ' ' + lastName : ''}`}</Text>
         </View>
         <Avatar name="Aanya K" size={45} color="#DCEFE6" />
       </View>
@@ -58,15 +52,24 @@ export default function HomeScreen() {
         {/* Quick overview */}
         <View className="flex flex-col gap-3 bg-accent rounded-2xl p-5">
           <Text className="text-accent-foreground/90 text-md font-medium">Total balance</Text>
-          <Text className="text-2xl font-bold text-white">$4,820.50</Text>
+          <Text className="text-2xl font-bold text-white">
+            {currencySymbol}
+            {availableTotalbalance.toLocaleString()}
+          </Text>
           <View className="flex flex-row gap-5">
             <View className="flex-1 flex-col gap-1 bg-accent-foreground/10 p-3 pt-1.5 rounded-2xl">
               <Text className="text-xs font-medium text-accent-foreground/90">Income</Text>
-              <Text className="text-md font-bold text-white">+$3,200</Text>
+              <Text className="text-md font-bold text-white">
+                +{currencySymbol}
+                {currentMonthTotalIncome.toLocaleString()}
+              </Text>
             </View>
             <View className="flex-1 flex-col gap-1 bg-accent-foreground/10 p-3 pt-1.5 rounded-2xl">
               <Text className="text-xs font-medium text-accent-foreground/90">Spent</Text>
-              <Text className="text-md font-bold text-white">-$1,540</Text>
+              <Text className="text-md font-bold text-white">
+                -{currencySymbol}
+                {currentMonthTotalExpense.toLocaleString()}
+              </Text>
             </View>
           </View>
         </View>
@@ -75,10 +78,12 @@ export default function HomeScreen() {
         <View className="p-4 flex flex-col gap-2 bg-background rounded-2xl mt-5">
           <View className="flex flex-row justify-between items-center">
             <Text className="text-secondary-foreground/90 text-base font-semibold">
-              July budget
+              {monthName} budget
             </Text>
             <Text className="text-secondary-foreground/70 text-md font-medium">
-              $1,540 / $2,000
+              {currencySymbol}
+              {currentMonthTotalExpense.toLocaleString()} / {currencySymbol}
+              {monthlyBudget.toLocaleString()}
             </Text>
           </View>
 
@@ -123,9 +128,14 @@ export default function HomeScreen() {
                 </View>
                 <Text
                   className="text-md font-bold"
-                  style={{ color: activity.amount.startsWith('-') ? '#EF4444' : '#10B981' }}
+                  style={{
+                    color:
+                      activity.amount < 0 ? '#EF4444' : activity.amount > 0 ? '#10B981' : '#3B82F6',
+                  }}
                 >
-                  {activity.amount}
+                  {activity.amount < 0 ? '-' : activity.amount > 0 ? '+' : ''}
+                  {currencySymbol}
+                  {activity.amount.toLocaleString()}
                 </Text>
               </View>
             </React.Fragment>
