@@ -39,6 +39,7 @@ export default function HomeScreen() {
 
   return (
     <PageView title="Home">
+      
       {/* Top greetings */}
       <View className="flex flex-row justify-between items-center p-5">
         <View>
@@ -48,7 +49,9 @@ export default function HomeScreen() {
         <Avatar name="Aanya K" size={45} color="#DCEFE6" />
       </View>
 
+      {/* Dashboard */}
       <ScrollView contentContainerClassName="px-5">
+        
         {/* Quick overview */}
         <View className="flex flex-col gap-3 bg-accent rounded-2xl p-5">
           <Text className="text-accent-foreground/90 text-md font-medium">Total balance</Text>
