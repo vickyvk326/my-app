@@ -2,9 +2,15 @@ import React from 'react';
 
 import { Text, View } from 'react-native';
 
-type Props = { name: string; size: number; color: string; maxChars?: number; borderRadiusLevel?: number };
+type Props = {
+  name: string;
+  size: number;
+  color?: string;
+  maxChars?: number;
+  borderRadiusLevel?: number;
+};
 
-const Avatar = ({ name, size, color, maxChars = 2, borderRadiusLevel = 2 }: Props) => {
+const Avatar = ({ name, size, color = '#DCEFE6', maxChars = 2, borderRadiusLevel = 2 }: Props) => {
   const initials = name
     .split(' ')
     .map((word) => word[0])

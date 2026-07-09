@@ -1,17 +1,23 @@
 import { Transaction } from '@/store/useTransactionsStore';
 import { formatDistanceToNow } from 'date-fns';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import Avatar from './Avatar';
+import { useRouter } from 'expo-router';
 
 interface TransactionRowViewProps {
   activity: Transaction;
   currencySymbol: string;
 }
 export default function TransactionRowView({ activity, currencySymbol }: TransactionRowViewProps) {
+  const router = useRouter();
   const relativeTimeAgo = formatDistanceToNow(new Date(activity.date), { addSuffix: true });
+  const navigateToTransactionDetail = () => router.push(`/transaction/${activity.id}`);
   return (
-    <View className="flex flex-row gap-4 justify-between items-center rounded-2xl">
+    <Pressable
+      onPress={navigateToTransactionDetail}
+      className="flex flex-row gap-4 justify-between items-center rounded-2xl"
+    >
       <Avatar name={activity.title} size={40} color="#DCEFE6" />
       <View className="flex-1">
         <Text className="text-secondary-foreground/90 text-md font-semibold">{activity.title}</Text>
@@ -38,6 +44,6 @@ export default function TransactionRowView({ activity, currencySymbol }: Transac
         {currencySymbol}
         {activity.amount.toLocaleString()}
       </Text>
-    </View>
+    </Pressable>
   );
 }

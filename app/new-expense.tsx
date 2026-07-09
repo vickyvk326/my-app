@@ -12,7 +12,6 @@ const NewExpense = () => {
   const [amount, setAmount] = useState('0');
   const [category, setCategory] = useState<string>(TRANSACTION_CATEGORIES[0]);
   function handleAmountChange(text: string) {
-    // allow only digits and a single decimal point, max 2 decimal places
     const cleaned = text.replace(/[^0-9.]/g, '');
     const parts = cleaned.split('.');
     const normalized = parts.length > 2 ? `${parts[0]}.${parts.slice(1).join('')}` : cleaned;
@@ -62,6 +61,7 @@ const NewExpense = () => {
         </View>
 
         <View className="flex-1 bg-background mt-5 p-5">
+          {/* Category */}
           <Text className="text-muted text-md font-medium">Category</Text>
           <View className="flex flex-row items-center gap-3 mt-3" style={{ flexWrap: 'wrap' }}>
             {TRANSACTION_CATEGORIES.map((c) => (
@@ -81,6 +81,7 @@ const NewExpense = () => {
           </View>
         </View>
 
+        {/* Details */}
         <View className="bg-background py-4 px-5">
           <View className="flex flex-col">
             <React.Fragment>

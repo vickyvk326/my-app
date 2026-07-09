@@ -11,6 +11,7 @@ export type Transaction = {
   category: TransactionCategory;
   amount: number;
   date: string;
+  note?: string;
 };
 
 type TransactionsState = {
@@ -89,7 +90,7 @@ const mockTransactions: Transaction[] = [
     id: 'txn-9',
     accountId: 'acc-bank-1',
     title: 'Freelance Project Payout',
-    category: 'freelance',
+    category: 'refund',
     amount: 12000,
     date: '2026-07-07T15:00:00.000Z',
   },
